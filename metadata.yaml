@@ -11,6 +11,4 @@ description: |
   nearest to the data with an available work slot.
 provides:
   hadoop-master:
-    interface: hadoop-namenode
-    interface: hadoop-jobtracker
-    interface: hadoop-hdfs
+    interface: hadoop-master
