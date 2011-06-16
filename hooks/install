@@ -18,7 +18,6 @@ apt-get update
 ensemble-log "calculating ip"
 IP_ADDRESS=`hostname -f`
 ensemble-log "Private IP: ${IP_ADDRESS}"
-ensemble-log "Public DNS: ${PUBLIC_DNS}"
 
 # Preseed our Namenode, Jobtracker and HDFS Data directory
 NAMENODE=${IP_ADDRESS}
