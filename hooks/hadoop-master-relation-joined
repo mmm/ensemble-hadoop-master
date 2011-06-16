@@ -8,7 +8,7 @@ set -x
 ensemble-log "joined script started"
 
 # Calculate our IP Address
-IP_ADDRESS=`curl http://169.254.169.254/latest/meta-data/local-ipv4`
+IP_ADDRESS=`hostname -f`
 
 # Preseed our Namenode, Jobtracker and HDFS Data directory
 NAMENODE=${IP_ADDRESS}
