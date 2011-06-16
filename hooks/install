@@ -1,0 +1,42 @@
+#!/bin/bash
+# Here do anything needed to install the service
+# i.e. apt-get install -y foo  or  bzr branch http://myserver/mycode /srv/webroot
+
+set -x
+
+ensemble-log "install script"
+
+export TERM=linux
+
+# Add the Hadoop PPA
+ensemble-log "Adding ppa"
+apt-add-repository ppa:canonical-sig/thirdparty
+ensemble-log "updating cache"
+apt-get update
+
+# Calculate our IP Address
+ensemble-log "calculating ip"
+IP_ADDRESS=`curl http://169.254.169.254/latest/meta-data/local-ipv4`
+PUBLIC_DNS=`curl http://169.254.169.254/latest/meta-data/public-hostname`
+ensemble-log "Private IP: ${IP_ADDRESS}"
+ensemble-log "Public DNS: ${PUBLIC_DNS}"
+
+# Preseed our Namenode, Jobtracker and HDFS Data directory
+NAMENODE=${IP_ADDRESS}
+JOBTRACKER=${IP_ADDRESS}
+HDFSDATADIR="/var/lib/hadoop-0.20/dfs/data"
+ensemble-log "Namenode: ${NAMENODE}"
+ensemble-log "Jobtracker: ${JOBTRACKER}"
+ensemble-log "HDFS Dir: ${HDFSDATADIR}"
+
+echo debconf hadoop/namenode string ${NAMENODE}| /usr/bin/debconf-set-selections
+echo debconf hadoop/jobtracker string ${JOBTRACKER}| /usr/bin/debconf-set-selections
+echo debconf hadoop/hdfsdatadir string ${HDFSDATADIR}| /usr/bin/debconf-set-selections
+
+# Install the packages
+ensemble-log "installing packages"
+apt-get install -y hadoop-0.20-namenode hadoop-0.20-jobtracker
+
+
+# This is where we start praying that everything is working :)
+ensemble-log "Point your browser to http://${public-hostname}:50070"

@@ -1,0 +1,20 @@
+#!/bin/sh
+# This must be renamed to the name of the relation. The goal here is to
+# affect any change needed by relationships being formed
+# This script should be idempotent.
+
+set -x
+
+ensemble-log "joined script started"
+
+# Calculate our IP Address
+IP_ADDRESS=`curl http://169.254.169.254/latest/meta-data/local-ipv4`
+
+# Preseed our Namenode, Jobtracker and HDFS Data directory
+NAMENODE=${IP_ADDRESS}
+JOBTRACKER=${IP_ADDRESS}
+HDFSDATADIR="/var/lib/hadoop-0.20/dfs/data"
+
+relation-set namenode="${NAMENODE}" jobtracker="${JOBTRACKER}" hdfsdatadir="${HDFSDATADIR}"
+
+echo $ENSEMBLE_REMOTE_UNIT joined

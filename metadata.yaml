@@ -1,0 +1,16 @@
+ensemble: formula
+name: hadoop-master
+revision: 1
+summary: Master Node for Hadoop
+description: |
+  The Hadoop Distributed Filesystem (HDFS) requires one unique server, the
+  namenode, which manages the block locations of files on the
+  filesystem.  The jobtracker is a central service which is responsible
+  for managing the tasktracker services running on all nodes in a
+  Hadoop Cluster.  The jobtracker allocates work to the tasktracker
+  nearest to the data with an available work slot.
+provides:
+  hadoop-master:
+    interface: hadoop-namenode
+    interface: hadoop-jobtracker
+    interface: hadoop-hdfs
