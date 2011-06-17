@@ -11,8 +11,8 @@ ensemble-log "joined script started"
 IP_ADDRESS=`hostname -f`
 
 # Preseed our Namenode, Jobtracker and HDFS Data directory
-NAMENODE=${IP_ADDRESS}
-JOBTRACKER=${IP_ADDRESS}
+NAMENODE="${IP_ADDRESS}"
+JOBTRACKER="${IP_ADDRESS}"
 HDFSDATADIR="/var/lib/hadoop-0.20/dfs/data"
 
 relation-set namenode="${NAMENODE}" jobtracker="${JOBTRACKER}" hdfsdatadir="${HDFSDATADIR}"

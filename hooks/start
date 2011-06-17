@@ -3,6 +3,6 @@
 # Note that currently this is run directly after install
 # i.e. 'service apache2 start'
 set -x
-ensemble-log "start script"
-service hadoop-0.20-namenode restart
-service hadoop-0.20-jobtracker restart
+service hadoop-0.20-namenode status || service hadoop-0.20-namenode start
+service hadoop-0.20-jobtracker status || service hadoop-0.20-jobtracker start
+
