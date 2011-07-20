@@ -37,7 +37,7 @@ apt-get install -y hadoop-0.20-namenode
 apt-get install -y hadoop-0.20-jobtracker
 
 # Open the necessary ports
-if [ -x `which open-port` ];then
+if [ -x /usr/bin/open-port ];then
    open-port 50010/TCP
    open-port 50020/TCP
    open-port 50030/TCP
@@ -47,5 +47,5 @@ if [ -x `which open-port` ];then
    open-port 50060/TCP
    open-port 50070/TCP
    open-port 50075/TCP
+   open-port 50090/TCP
 fi
-open-port 50090/TCP
