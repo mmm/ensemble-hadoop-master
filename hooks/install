@@ -36,3 +36,16 @@ ensemble-log "installing packages"
 apt-get install -y hadoop-0.20-namenode
 apt-get install -y hadoop-0.20-jobtracker
 
+# Open the necessary ports
+if [ -x `which open-port` ];then
+   open-port 50010/TCP
+   open-port 50020/TCP
+   open-port 50030/TCP
+   open-port 50105/TCP
+   open-port 54310/TCP
+   open-port 54311/TCP
+   open-port 50060/TCP
+   open-port 50070/TCP
+   open-port 50075/TCP
+fi
+open-port 50090/TCP
