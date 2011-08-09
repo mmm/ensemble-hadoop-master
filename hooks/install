@@ -2,24 +2,40 @@
 # Here do anything needed to install the service
 # i.e. apt-get install -y foo  or  bzr branch http://myserver/mycode /srv/webroot
 
-set -x
 
+############################################################################################################
+# Set debugging
+############################################################################################################
+
+set -ux
 ensemble-log "install script"
 
-export TERM=linux
 
+############################################################################################################
+# Add the repositories
+############################################################################################################
+
+export TERM=linux
 # Add the Hadoop PPA
 ensemble-log "Adding ppa"
 apt-add-repository ppa:canonical-sig/thirdparty
 ensemble-log "updating cache"
 apt-get update
 
+
+############################################################################################################
 # Calculate our IP Address
+############################################################################################################
+
 ensemble-log "calculating ip"
 IP_ADDRESS=`hostname -f`
 ensemble-log "Private IP: ${IP_ADDRESS}"
 
+
+############################################################################################################
 # Preseed our Namenode, Jobtracker and HDFS Data directory
+############################################################################################################
+
 NAMENODE="${IP_ADDRESS}"
 JOBTRACKER="${IP_ADDRESS}"
 HDFSDATADIR="/var/lib/hadoop-0.20/dfs/data"
@@ -31,12 +47,20 @@ echo debconf hadoop/namenode string ${NAMENODE}| /usr/bin/debconf-set-selections
 echo debconf hadoop/jobtracker string ${JOBTRACKER}| /usr/bin/debconf-set-selections
 echo debconf hadoop/hdfsdatadir string ${HDFSDATADIR}| /usr/bin/debconf-set-selections
 
+
+############################################################################################################
 # Install the packages
+############################################################################################################
+
 ensemble-log "installing packages"
 apt-get install -y hadoop-0.20-namenode
 apt-get install -y hadoop-0.20-jobtracker
 
+
+############################################################################################################
 # Open the necessary ports
+############################################################################################################
+
 if [ -x /usr/bin/open-port ];then
    open-port 50010/TCP
    open-port 50020/TCP
