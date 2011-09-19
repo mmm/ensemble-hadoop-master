@@ -1,4 +1,3 @@
-ensemble: formula
 name: hadoop-master
 revision: 1
 summary: Master Node for Hadoop

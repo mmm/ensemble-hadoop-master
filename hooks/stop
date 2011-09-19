@@ -7,6 +7,6 @@
 # rm /srv/webroot/server-live.txt && sleep 30
 
 set -x
-ensemble-log "stop script"
+juju-log "stop script"
 service hadoop-0.20-namenode stop
 service hadoop-0.20-jobtracker stop

@@ -8,7 +8,7 @@
 ############################################################################################################
 
 set -ux
-ensemble-log "install script"
+juju-log "install script"
 
 
 ############################################################################################################
@@ -17,9 +17,9 @@ ensemble-log "install script"
 
 export TERM=linux
 # Add the Hadoop PPA
-ensemble-log "Adding ppa"
+juju-log "Adding ppa"
 apt-add-repository ppa:canonical-sig/thirdparty
-ensemble-log "updating cache"
+juju-log "updating cache"
 apt-get update
 
 
@@ -27,9 +27,9 @@ apt-get update
 # Calculate our IP Address
 ############################################################################################################
 
-ensemble-log "calculating ip"
+juju-log "calculating ip"
 IP_ADDRESS=`hostname -f`
-ensemble-log "Private IP: ${IP_ADDRESS}"
+juju-log "Private IP: ${IP_ADDRESS}"
 
 
 ############################################################################################################
@@ -39,9 +39,9 @@ ensemble-log "Private IP: ${IP_ADDRESS}"
 NAMENODE="${IP_ADDRESS}"
 JOBTRACKER="${IP_ADDRESS}"
 HDFSDATADIR="/var/lib/hadoop-0.20/dfs/data"
-ensemble-log "Namenode: ${NAMENODE}"
-ensemble-log "Jobtracker: ${JOBTRACKER}"
-ensemble-log "HDFS Dir: ${HDFSDATADIR}"
+juju-log "Namenode: ${NAMENODE}"
+juju-log "Jobtracker: ${JOBTRACKER}"
+juju-log "HDFS Dir: ${HDFSDATADIR}"
 
 echo debconf hadoop/namenode string ${NAMENODE}| /usr/bin/debconf-set-selections
 echo debconf hadoop/jobtracker string ${JOBTRACKER}| /usr/bin/debconf-set-selections
@@ -52,7 +52,7 @@ echo debconf hadoop/hdfsdatadir string ${HDFSDATADIR}| /usr/bin/debconf-set-sele
 # Install the packages
 ############################################################################################################
 
-ensemble-log "installing packages"
+juju-log "installing packages"
 apt-get install -y hadoop-0.20-namenode
 apt-get install -y hadoop-0.20-jobtracker
 
