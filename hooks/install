@@ -16,9 +16,13 @@ juju-log "install script"
 ############################################################################################################
 
 export TERM=linux
+
+#RELEASE_CODE=`lsb_release -a | awk '/Codename/ { print $2 }'`
+
 # Add the Hadoop PPA
 juju-log "Adding ppa"
-apt-add-repository ppa:canonical-sig/thirdparty
+apt-add-repository ppa:mark-mims/hadoop
+#apt-add-repository ppa:canonical-sig/thirdparty
 juju-log "updating cache"
 apt-get update
 
@@ -28,16 +32,22 @@ apt-get update
 ############################################################################################################
 
 juju-log "calculating ip"
-IP_ADDRESS=`hostname -f`
+HOSTNAME=`hostname -f`
+IP_ADDRESS=`hostname -f | xargs dig +short`
 juju-log "Private IP: ${IP_ADDRESS}"
+
+# only necessary on oneiric but shouldn't break anything elsewhere
+#sed -i "s/\(.*${HOSTNAME}.*\)/#\1/" /etc/hosts
+sed -i "s/127.0.1.1\(.*${HOSTNAME}.*\)/${IP_ADDRESS}\1/" /etc/hosts
+
 
 
 ############################################################################################################
 # Preseed our Namenode, Jobtracker and HDFS Data directory
 ############################################################################################################
 
-NAMENODE="${IP_ADDRESS}"
-JOBTRACKER="${IP_ADDRESS}"
+NAMENODE="${HOSTNAME}"
+JOBTRACKER="${HOSTNAME}"
 HDFSDATADIR="/var/lib/hadoop-0.20/dfs/data"
 juju-log "Namenode: ${NAMENODE}"
 juju-log "Jobtracker: ${JOBTRACKER}"
@@ -55,6 +65,12 @@ echo debconf hadoop/hdfsdatadir string ${HDFSDATADIR}| /usr/bin/debconf-set-sele
 juju-log "installing packages"
 apt-get install -y hadoop-0.20-namenode
 apt-get install -y hadoop-0.20-jobtracker
+
+
+# set bind-address...
+#sed -i 's###' /etc/hadoop/conf/hadoop-env.sh
+#echo "export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true" >> /etc/hadoop/conf/hadoop-env.sh
+
 
 
 ############################################################################################################
