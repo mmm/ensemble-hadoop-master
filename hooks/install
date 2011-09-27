@@ -89,3 +89,16 @@ if [ -x /usr/bin/open-port ];then
    open-port 50075/TCP
    open-port 50090/TCP
 fi
+
+HADOOP_HOME=/usr/lib/hadoop
+job_already_installed() {
+  [[ -f $HADOOP_HOME/terasort.sh ]]
+}
+install_job() {
+  juju-log "installing terasort script"
+  cp scripts/terasort.sh $HADOOP_HOME
+  chown hdfs.hdfs $HADOOP_HOME/terasort.sh
+  chmod 755 $HADOOP_HOME/terasort.sh
+}
+job_already_installed || install_job
+

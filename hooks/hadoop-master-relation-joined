@@ -18,3 +18,9 @@ HDFSDATADIR="/var/lib/hadoop-0.20/dfs/data"
 relation-set namenode="${NAMENODE}" jobtracker="${JOBTRACKER}" hdfsdatadir="${HDFSDATADIR}"
 
 echo $JUJU_REMOTE_UNIT joined
+
+# write some sort of status to the filesystem(?)
+# need to know if the dfs has been formatted
+# before downloading seed data and starting a job
+
+

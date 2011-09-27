@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -ux
+juju-log "configuration changed"
+
+HADOOP_HOME=/usr/lib/hadoop
+JOB_SCRIPT=$HADOOP_HOME/terasort.sh
+
+job_size=`config-get job_size`
+if [[ ! -z $job_size ]]; then
+  sed -i "s/SIZE=.*/SIZE=${job_size}/" $JOB_SCRIPT
+fi
+
+job_maps=`config-get job_maps`
+if [[ ! -z $job_maps ]]; then
+  sed -i "s/NUM_MAPS=.*/NUM_MAPS=${job_maps}/" $JOB_SCRIPT
+fi
+
+job_reduces=`config-get job_reduces`
+if [[ ! -z $job_reduces ]]; then
+  sed -i "s/NUM_REDUCES=.*/NUM_REDUCES=${job_reduces}/" $JOB_SCRIPT
+fi
+
+job_data_dir=`config-get job_data_dir`
+if [[ ! -z $job_data_dir ]]; then
+  sed -i "s/IN_DIR=.*/IN_DIR=${job_data_dir}/" $JOB_SCRIPT
+fi
+
+job_output_dir=`config-get job_output_dir`
+if [[ ! -z $job_output_dir ]]; then
+  sed -i "s/OUT_DIR=.*/OUT_DIR=${job_output_dir}/" $JOB_SCRIPT
+fi
+
