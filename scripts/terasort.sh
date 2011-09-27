@@ -6,9 +6,9 @@ NUM_REDUCES=100
 IN_DIR=in_dir
 OUT_DIR=out_dir
 
-hadoop /usr/lib/hadoop/hadoop-examples.jar teragen -Dmapred.map.tasks=${NUM_MAPS} ${SIZE} ${IN_DIR}
+hadoop jar /usr/lib/hadoop/hadoop-examples.jar teragen -Dmapred.map.tasks=${NUM_MAPS} ${SIZE} ${IN_DIR}
 
 sleep 10
 
-hadoop /usr/lib/hadoop/hadoop-examples.jar terasort -Dmapred.reduce.tasks=${NUM_REDUCES} ${IN_DIR} ${OUT_DIR}
+hadoop jar /usr/lib/hadoop/hadoop-examples.jar terasort -Dmapred.reduce.tasks=${NUM_REDUCES} ${IN_DIR} ${OUT_DIR}
 
