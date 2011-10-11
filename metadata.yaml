@@ -1,5 +1,4 @@
 name: hadoop-master
-revision: 1
 summary: Master Node for Hadoop
 description: |
   The Hadoop Distributed Filesystem (HDFS) requires one unique server, the
