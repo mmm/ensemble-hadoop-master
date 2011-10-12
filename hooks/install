@@ -27,17 +27,16 @@ apt-get update
 # Calculate our IP Address
 ############################################################################################################
 
-juju-log "calculating ip"
-IP_ADDRESS=`hostname -f`
-juju-log "Private IP: ${IP_ADDRESS}"
+PRIVATE_ADDRESS=`unit-get private-address`
+juju-log "Private Address: ${PRIVATE_ADDRESS}"
 
 
 ############################################################################################################
 # Preseed our Namenode, Jobtracker and HDFS Data directory
 ############################################################################################################
 
-NAMENODE="${IP_ADDRESS}"
-JOBTRACKER="${IP_ADDRESS}"
+NAMENODE="${PRIVATE_ADDRESS}"
+JOBTRACKER="${PRIVATE_ADDRESS}"
 HDFSDATADIR="/var/lib/hadoop-0.20/dfs/data"
 juju-log "Namenode: ${NAMENODE}"
 juju-log "Jobtracker: ${JOBTRACKER}"
